@@ -89,7 +89,7 @@ class DataSetFunc():
 class RunExE():
 
     def run(self, path):
-        if platform.system() == 'windows': path = f"& '{path}'"
+        if platform.system() == 'Windows': path = f'"{path}"'
         if os.system(path):
             return False
         else:
