@@ -3,6 +3,7 @@ from PySide6.QtCore import QTimer
 from model import Model
 from functools import partial
 import os
+import platform
 
 class ButtonClickedFunc():
     def __init__(self, model: Model, pathList: list):
@@ -88,6 +89,7 @@ class DataSetFunc():
 class RunExE():
 
     def run(self, path):
+        if platform.system() == 'windows': path = f"& '{path}'"
         if os.system(path):
             return False
         else:
