@@ -1,6 +1,8 @@
-from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QRadioButton, QHBoxLayout, QVBoxLayout
+from PySide6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QRadioButton, QHBoxLayout, QVBoxLayout, QScrollArea
 from functools import partial
 from controller import DataSetFunc, ButtonClickedFunc
+from PySide6.QtGui import Qt
+from PySide6.QtCore import QRect
 
 class Ui():
     
@@ -8,10 +10,18 @@ class Ui():
         self.pathList = []
         self.model = model
 
+        self.scrollArea = QScrollArea(widget)
+        self.layout = QVBoxLayout()
+        self.scrollArea.setWidgetResizable(True)
+
+        self.container = QWidget()
         self.dataSetFunc = DataSetFunc(self.model)
         self.buttonFunc = ButtonClickedFunc(self.model, self.pathList)
-        self.mainLayout = QVBoxLayout()
-        widget.setLayout(self.mainLayout)
+        self.mainLayout = QVBoxLayout(self.container)
+        # widget.setLayout(self.mainLayout)
+        self.scrollArea.setWidget(self.container)
+        widget.layout.addWidget(self.scrollArea)
+        widget.setLayout(self.layout)
 
         titleLayout = QHBoxLayout()
         self.label1 = QLabel()
@@ -58,6 +68,8 @@ class Ui():
 
         self.buttonFunc.pathList = self.pathList
         self.buttonFunc.windowStart()
+
+
     
     def setPathList(self):
         
